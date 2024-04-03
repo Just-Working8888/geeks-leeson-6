@@ -1,8 +1,10 @@
 import { useState } from "react"
 import Form from "./Form"
+import Cart from "./Cart"
 
-const Header = () => {
+const Header = ({ }) => {
     const [modal, setModal] = useState(false)
+    const [cart, setCart] = useState(false)
     return (
         <header className="header">
             <nav className="main_nav">
@@ -17,9 +19,11 @@ const Header = () => {
                         <li>profile</li>
                     </ul>
                 </div>
+                <button onClick={()=>setCart(true)}>cart</button>
                 <button onClick={() => setModal(true)}>add produckt</button>
             </nav>
-            {modal && <Form />}
+            {cart && <Cart />}
+            {modal && <Form setModal={setModal} />}
 
         </header>
     )

@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const Form = () => {
+const Form = ({ setModal }) => {
 
     const [form, setForm] = useState({})
     const url = new URL('https://63d304794abff88834170d21.mockapi.io/ss')
@@ -22,10 +22,10 @@ const Form = () => {
         });
     };
     return (
-        <div className="mask">
+        <div onClick={() => setModal(false)} className="mask">
 
-            <form className="form" onSubmit={handleSubmit}>
-
+            <form onClick={(event) => event.stopPropagation()} className="form" onSubmit={handleSubmit}>
+                <div onClick={() => setModal(false)}>x</div>
                 <input
                     name="title"
                     onChange={handleChange}
@@ -50,7 +50,7 @@ const Form = () => {
                     placeholder="description" type="text" />
                 <button type="submit">submit</button>
             </form>
-        </div>
+        </div >
     )
 }
 export default Form
