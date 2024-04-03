@@ -125,3 +125,19 @@ textarea {
   border-radius: 20px;
   transition: 0.3s;
 }
+
+
+.Protected {
+  padding: 1rem;
+  border: 3px dashed red;
+
+}
+
+.dark {
+  background-color: rgba(0, 0, 0, 0.308);
+  box-shadow: 0px 0px 79px 0px rgba(0, 0, 0, 0.75);
+}
+
+.light {
+  background-color: white;
+}

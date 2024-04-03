@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import '../App.css';
 
-function Counter() {
+function Counter({title}) {
     const [state, setState] = useState(0)
     function add() {
         if (state < 20) {

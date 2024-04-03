@@ -1,59 +1,53 @@
-import { useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import './App.css';
 import Card from './components/Card';
 import Header from './components/Header'
 import data from './data/data.json'
+import Protected from './components/Proteced';
+import Home from './pages/Home';
+
+const ThemeContext = createContext()
+const ThemeTogleContext = createContext()
+function ThemeProvider({ children }) {
+  const [isDarkMOde, setIsDarkMode] = useState(false)
+  function togleThene() {
+    setIsDarkMode(prev => !prev)
+  }
+  return (
+    <ThemeContext.Provider value={isDarkMOde}>
+      <ThemeTogleContext.Provider value={togleThene}>
+        {children}
+      </ThemeTogleContext.Provider>
+    </ThemeContext.Provider>
+  )
+}
+
+export function useThemeToggle() {
+  const context = useContext(ThemeTogleContext)
+  if (context === undefined) {
+    console.log('error');
+  }
+  return context
+}
+
+export function useTheme() {
+  const context = useContext(ThemeContext)
+  if (context === undefined) {
+    console.log('error');
+  }
+  return context
+}
 
 function App() {
-  const [data, setData] = useState(null)
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [search, setSearch] = useState('')
-  const url = new URL('https://63d304794abff88834170d21.mockapi.io/ss')
-  url.searchParams.append('title', search)
-
-  useEffect(() => {
-    fetch(url)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Response id error reques')
-        }
-        return response.json()
-      })
-      .then(dataa => {
-        setData(dataa)
-        setLoading(false)
-      })
-      .catch(error => {
-        setError(error)
-        setLoading(false)
-      })
-  }, [search])
-
-  if (loading) {
-    return 'loading ....'
-  }
 
   return (
-    <div className="App">
-      <Header />
+    <ThemeProvider>
+      <Protected>
+        <Header />
+      </Protected>
+      <Home />
+    </ThemeProvider >
 
-      <input onChange={(e) => setSearch(e.target.value)} type="text" />
-
-      <div className='container'>
-        {
-          data?.map((item) =>
-            <Card
-              key={item.id}
-              price={item.price}
-              oldPrice={item.oldPrice}
-              description={item.description}
-              title={item.title}
-              img={item.image}
-            />)
-        }
-      </div>
-    </div>
   );
 }
 
